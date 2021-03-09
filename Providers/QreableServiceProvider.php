@@ -7,6 +7,7 @@ use Modules\Core\Traits\CanPublishConfiguration;
 use Modules\Core\Events\BuildingSidebar;
 use Modules\Core\Events\LoadingBackendTranslations;
 use Modules\Qreable\Events\Handlers\RegisterQreableSidebar;
+use Illuminate\Support\Arr;
 
 class QreableServiceProvider extends ServiceProvider
 {
@@ -29,7 +30,7 @@ class QreableServiceProvider extends ServiceProvider
         $this->app['events']->listen(BuildingSidebar::class, RegisterQreableSidebar::class);
 
         $this->app['events']->listen(LoadingBackendTranslations::class, function (LoadingBackendTranslations $event) {
-            $event->load('locations', array_dot(trans('qreable::locations')));
+            $event->load('locations', Arr::dot(trans('qreable::locations')));
             // append translations
 
         });
