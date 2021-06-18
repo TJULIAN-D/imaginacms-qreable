@@ -9,4 +9,11 @@ class Qr extends Model
 
     protected $table = 'qreable__qrs';
     protected $fillable = ['code'];
+    /**
+     * {@inheritdoc}
+     */
+    public function qreables($model)
+    {
+        return $this->morphedByMany($model, 'qreable', 'qreable__qred', 'qr_id', 'qreable_id');
+    }
 }
