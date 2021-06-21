@@ -14,6 +14,14 @@ class Qr extends Model
      */
     public function qreables($model)
     {
-        return $this->morphedByMany($model, 'qreable', 'qreable__qred', 'qr_id', 'qreable_id');
+        return $this->morphedByMany($model, 'qreable', 'qreable__qred', 'qr_id', 'qreable_id')
+            ->withPivot('zone','redirect','id');
+    }
+
+    public function qreablesByZone($model, $zone)
+    {
+        return $this->morphedByMany($model, 'qreable', 'qreable__qred', 'qr_id', 'qreable_id')
+            ->wherePivot('zone', $zone)
+            ->withPivot('zone','redirect','id');
     }
 }

@@ -3,6 +3,8 @@
 
 namespace Modules\Qreable\Services;
 
+use Illuminate\Support\Str;
+use Modules\Qreable\Entities\Qr;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class QrService
@@ -12,37 +14,26 @@ class QrService
 
     }
 
-    public function addQr($model, $codes){
+    public function addQr($model, $redirect, $zone = null){
         $entityClass = get_class($model);
-        if(is_array($codes)){
-            foreach ($codes as $code) {
-                $qrCode = $this->generateQrCode($code);
-                $qr = Qr::where('code',$qrCode);
-                if($qr==null)
-                    $qr = new QrCode(['code' => $code]);
-                if ($qr->exists === false) {
-                    $qr->save();
-                }
-                if ($qr->qreables($entityClass)->contains($model->id) === false) {
-                    $qr->qreables($entityClass)->attach($model);
-                }
-            }
-        }else {
-            $qrCode = $this->generateQrCode($codes);
-            $qr = Qr::where('code',$qrCode);
-            if($qr==null)
-                $qr = new QrCode(['code' => $qrCode]);
-            if ($qr->exists === false) {
-                $qr->save();
-            }
-            if ($qr->qreables($entityClass)->contains($model->id) === false) {
-                $qr->qreables($entityClass)->attach($model);
-            }
+        $qr = new Qr(['code' => '']);
+        $qr->save();
+        if ($qr->qreables($entityClass)->get()->contains($model->id) === false) {
+            $qr->qreables($entityClass)->attach($model, ['zone' => $zone, 'redirect' => $redirect]);
+            $lastQreable = $qr->qreablesByZone($entityClass, $zone)->first();
+            $qrCode = $this->generateQrCode(route('api.qreable.show',[$lastQreable->pivot->id]));
+            $qr->update(['code'=>$qrCode]);
         }
+
     }
 
     public function generateQrCode($code){
-        $qrCode = QrCode::format('png')->size(1024)->color(0,100,177)->generate($code);
+        $hexPrimaryColor = str_ireplace('#','',setting('isite::brandPrimary'));
+        $colors = str_split($hexPrimaryColor,2);
+        foreach ($colors as &$color){
+            $color = hexdec($color);
+        }
+        $qrCode = QrCode::format('png')->size(256)->color($colors[0],$colors[1],$colors[2])->generate($code);
         return 'data:image/png;base64,'.base64_encode($qrCode);
     }
 }
