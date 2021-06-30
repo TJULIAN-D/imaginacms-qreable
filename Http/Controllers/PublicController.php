@@ -11,6 +11,11 @@ class PublicController extends BaseApiController
 
     private $user;
 
+    public function __construct()
+    {
+        $this->user = app("Modules\Iprofile\Repositories\UserApiRepository");
+    }
+
     function myQrs(){
         $user = $this->user->getItem(auth()->user()->id, (object)[
             'take' => false,
