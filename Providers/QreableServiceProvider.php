@@ -38,6 +38,7 @@ class QreableServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->publishConfig('qreable', 'config');
         $this->publishConfig('qreable', 'permissions');
 
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
