@@ -2,7 +2,7 @@
 
 return [
   'name' => 'Qreable',
-  'userMenulinks' => [
+  'userMenuLinks' => [
       [
           "title" => "iplan::common.title.my-qrs",
           "routeName" => "qreable.myQrs",
