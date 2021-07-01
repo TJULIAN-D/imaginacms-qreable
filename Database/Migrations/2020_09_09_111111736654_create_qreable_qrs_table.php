@@ -15,7 +15,7 @@ class CreateQreableQrsTable extends Migration
       Schema::create('qreable__qrs', function (Blueprint $table) {
         $table->engine = 'InnoDB';
         $table->increments('id');
-        $table->longText('code');
+        $table->longText('code')->nullable();
         $table->timestamps();
       });
 

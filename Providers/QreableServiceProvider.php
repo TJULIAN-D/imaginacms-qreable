@@ -67,6 +67,18 @@ class QreableServiceProvider extends ServiceProvider
                 return new \Modules\Qreable\Repositories\Cache\CacheQrDecorator($repository);
             }
         );
+        $this->app->bind(
+            'Modules\Qreable\Repositories\QredRepository',
+            function () {
+                $repository = new \Modules\Qreable\Repositories\Eloquent\EloquentQredRepository(new \Modules\Qreable\Entities\Qred());
+
+                if (! config('app.cache')) {
+                    return $repository;
+                }
+
+                return new \Modules\Qreable\Repositories\Cache\CacheQredDecorator($repository);
+            }
+        );
 // add bindings
 
     }
