@@ -55,7 +55,13 @@
                                                 {{-- form group--}}
                                                 <div class="col-sm-12 col-md-6 py-2 has-feedback">
                                                     {{-- label --}}
-                                                    <label for="extraField{{$extraField->field}}" class="font-weight-bold">{{trans("iprofile::frontend.form.$extraField->field")}}</label>
+                                                    <label for="extraField{{$extraField->field}}" class="font-weight-bold">
+                                                        @if(isset($extraField->label))
+                                                            {{$extraField->label}}
+                                                        @else
+                                                            {{trans("iprofile::frontend.form.$extraField->field")}}
+                                                        @endif
+                                                    </label>
                                                     <div>
                                                         {{ $oldValue }}
                                                     </div>
