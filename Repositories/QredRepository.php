@@ -7,10 +7,16 @@ use Modules\Core\Repositories\BaseRepository;
 interface QredRepository extends BaseRepository
 {
 
-    /**
-     * @param $criteria
-     * @param $params
-     * @return mixed
-     */
-    public function getItem($criteria, $params);
+  /**
+   * @param $criteria
+   * @param $params
+   * @return mixed
+   */
+  public function getItem($criteria, $params);
+
+  /**
+   * @param $params
+   * @return mixed
+   */
+  public function getItemsBy($params);
 }
