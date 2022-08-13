@@ -26,14 +26,10 @@ class QrService
         }
 
     }
-
+  
     public function generateQrCode($code){
-        $hexPrimaryColor = str_ireplace('#','',setting('isite::brandPrimary'));
-        $colors = str_split($hexPrimaryColor,2);
-        foreach ($colors as &$color){
-            $color = hexdec($color);
-        }
-        $qrCode = QrCode::format('png')->size(256)->color($colors[0],$colors[1],$colors[2])->generate($code);
+    
+        $qrCode = QrCode::format('png')->size(256)->color(0,0,0)->generate($code);
         return 'data:image/png;base64,'.base64_encode($qrCode);
     }
 }
