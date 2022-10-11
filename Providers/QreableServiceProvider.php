@@ -41,7 +41,7 @@ class QreableServiceProvider extends ServiceProvider
         $this->publishConfig('qreable', 'config');
         $this->publishConfig('qreable', 'permissions');
 
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        //$this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     /**
