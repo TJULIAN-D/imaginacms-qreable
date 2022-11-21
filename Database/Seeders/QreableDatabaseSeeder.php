@@ -16,6 +16,7 @@ class QreableDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->call(QreableModuleTableSeeder::class);
         // $this->call("OthersTableSeeder");
     }
 }
