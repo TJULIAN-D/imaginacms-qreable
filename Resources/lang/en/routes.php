@@ -1,4 +1,4 @@
 <?php
 return [
-    'my-qrs' => 'my-qrs',
+    'myQrs' => 'my-qrs',
 ];
