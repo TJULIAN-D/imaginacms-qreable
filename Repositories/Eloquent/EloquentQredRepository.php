@@ -44,6 +44,10 @@ class EloquentQredRepository extends EloquentBaseRepository implements QredRepos
     if (isset($params->fields) && count($params->fields))
       $query->select($params->fields);
 
+    if (!isset($params->filter->field)) {
+      $query->where('id', $criteria);
+    }
+
     /*== REQUEST ==*/
     return $query->first();
   }
