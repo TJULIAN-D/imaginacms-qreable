@@ -17,5 +17,5 @@ interface QrRepository extends BaseRepository
      * @param $params
      * @return mixed
      */
-    public function getItem($criteria, $params);
+    public function getItem($criteria, $params = false);
 }
